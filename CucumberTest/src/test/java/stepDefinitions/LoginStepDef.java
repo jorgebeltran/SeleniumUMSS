@@ -7,6 +7,8 @@ import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 public class LoginStepDef {
@@ -14,6 +16,7 @@ public class LoginStepDef {
 
     @Given("^Accedo a la pagina \"([^\"]*)\"$")
     public void accedo_a_la_pagina(String url){
+        driver.manage().window().maximize();
         driver.navigate().to(url);
     }
 
@@ -30,6 +33,10 @@ public class LoginStepDef {
     @When("^Hago click en el boton Sing In$")
     public void hago_click_en_el_boton_Sing_In() {
         singInButton().click();
+        //p[text()='Signed in successfully.']
+        WebElement signedSuccessfullyMessage = driver.findElement(By.xpath("//p[text()='Signed in successfully.']"));
+        WebDriverWait wait = new WebDriverWait(driver, 60);
+        wait.until(ExpectedConditions.invisibilityOf(signedSuccessfullyMessage));
     }
 
     @Then("^Debo ver un mensaje de error que dice \"([^\"]*)\"$")

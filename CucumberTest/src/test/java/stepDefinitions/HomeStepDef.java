@@ -49,9 +49,27 @@ public class HomeStepDef {
     public void verificarCursoEnHome(String curso){
         try{
             driver.findElement(By.xpath("//h4[contains(text(),'"+curso+"')]"));
+
         } catch(Exception e){
             Assert.fail("El curso: "+curso+" no fue mostrado");
         }
+    }
+
+    @When("^El mensaje que dice \"([^\"]*)\" \"([^\"]*)\" es mostrado$")
+    public void verificarNoSearchResults(String mensaje, String curso){
+        try{
+            driver.findElement(By.xpath(
+                    "//h4[contains(text(),'"+mensaje+"')]/strong[text()='"+curso+"']"));
+
+        } catch(Exception e){
+            Assert.fail("El mensaje not found para el curso: "+curso+" no fue mostrado");
+        }
+    }
+
+    @Then("^Navego al tab \"([^\"]*)\"$")
+    public void navegarTab(String tab) {
+        driver.findElement(By.xpath("//a[contains(text(),'"+tab+"')]")).click();
+
     }
 
     private WebElement userLabel(){
