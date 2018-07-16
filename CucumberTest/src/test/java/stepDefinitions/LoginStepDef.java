@@ -1,6 +1,7 @@
 package stepDefinitions;
 
 import browserManager.BrowserManager;
+import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -10,6 +11,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import java.util.List;
 
 public class LoginStepDef {
     WebDriver driver = BrowserManager.getDriver();
@@ -43,6 +46,14 @@ public class LoginStepDef {
     public void debo_ver_un_mensaje_de_error_que_dice(String mensaje) {
         String actualMensaje = errorLoginMessage().getAttribute("innerText");
         Assert.assertEquals(mensaje,actualMensaje,"El mensaje de error no es correcto");
+    }
+
+    @When("^Me logueo en la aplicacion con$")
+    public void login(DataTable datos){
+        List<List<String>> credenciales = datos.raw();
+        lleno_el_campo_email_con(credenciales.get(0).get(1));
+        lleno_el_campo_password_con(credenciales.get(1).get(1));
+        hago_click_en_el_boton_Sing_In();
     }
 
 
